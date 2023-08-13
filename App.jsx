@@ -9,6 +9,7 @@ import MovieInfo from './pages/MovieInfo'
 import MoviePlayer from './components/MoviePlayer'
 import ViewAll from './pages/ViewAll'
 import MyList from './pages/MyList'
+import SignInScreen from './pages/SignUp'
 
 const App = () => {
 
@@ -17,7 +18,8 @@ const App = () => {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator name="Home" initialRouteName={Home} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="SignInScreen" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="SignInScreen" component={SignInScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="MovieInfo" component={MovieInfo} />
         <Stack.Screen name="MoviePlayer" component={MoviePlayer} />

@@ -103,10 +103,10 @@ const handledislike=()=>{
             </View>
             {movie && (
             <View style={styles.details}>
-            <Text>Now Watching</Text>
+            <Text style={{color:'rgba(255,255,255,0.8)'}}>Now Watching</Text>
             <Text style={styles.title}>{movieDetails?.name || movieDetails?.title || movieDetails?.original_name}</Text>
             {/* {movieDetails.genres && ( */}
-            <Text>{movieDetails.genres[0]?.name} | {movieDetails.genres[1]?.name} | {movieDetails.genres[2]?.name}</Text>
+            <Text style={{color:'rgba(255,255,255,0.8)'}}>{movieDetails.genres[0]?.name} | {movieDetails.genres[1]?.name} | {movieDetails.genres[2]?.name}</Text>
             {/* )} */}
             
             </View>
@@ -138,7 +138,7 @@ const handledislike=()=>{
         <Text style={styles.iconText}>My List</Text>
         </View>
       </View>
-      <Text style={{color:'rgba(255,255,255,0.9)',fontSize:15,fontWeight:'bold',marginTop:15,marginLeft:10,marginBottom:10}}>YOUR WATCHLIST</Text>
+      <Text style={{color:'rgba(255,255,255,0.9)',fontSize:15,fontWeight:'bold',position:'relative',marginTop:15,marginRight:240,marginBottom:10}}>YOUR WATCHLIST</Text>
       <Recommended navigation={navigation}/>
       </View>
            
@@ -154,7 +154,7 @@ const styles=StyleSheet.create({
         borderRadius:10,
         paddingTop:5,
         paddingBottom:7,
-        paddingLeft:7
+        paddingLeft:7,
     },
     title:{
         fontSize:40,
@@ -170,14 +170,17 @@ const styles=StyleSheet.create({
         borderRadius:10,
         width:375,
         padding:10,
-        marginLeft:5,
+        // marginLeft:3,
         paddingTop:15,
         paddingBottom:15,
-        paddingLeft:10
+        paddingLeft:10,
+        borderWidth:0.5,
+        borderColor:'#fff'
       },
       iconText:{
         fontSize:12,
-        paddingTop:5
+        paddingTop:5,
+        color:'#fff'
       },
       
 

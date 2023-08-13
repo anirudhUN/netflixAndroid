@@ -29,7 +29,7 @@ console.log("MovieDetails",movieDetails)
             <View style={styles.content}>
             <Text style={styles.recommendedTitle}>{item?.title}</Text>
             <View style={styles.ratingContainer}>
-            <Text >Rating:</Text>
+            <Text style={{color:'rgba(255,255,255,0.8)', marginBottom:5}}>Rating:</Text>
             <View style={styles.rating}>
                     <Icon name="star" size={15} color="#FF9529" />
                     <Icon name="star" size={15} color="#FF9529" />
@@ -66,8 +66,8 @@ const styles=StyleSheet.create({
         backgroundColor:'rgba(151,151,151,0.3)',
         padding:1,
         borderRadius:10,
-        borderWidth:0.6,
-        borderColor:'rgba(151,151,151,1)',
+        borderWidth:1,
+        borderColor:'gray',
         elevation:50
       },
       card: {

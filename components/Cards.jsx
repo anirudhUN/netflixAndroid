@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     width: 150,
     margin: 3,
     borderRadius: 8,
-    // borderWidth:0.39,
-    // borderColor:'rgba(255,255,255,1)'
+    borderWidth:0.49,
+    borderColor:'#999'
   },
   card_heading: {
     fontSize: 15,
