@@ -1,0 +1,202 @@
+import React,{useState,useEffect, useCallback} from 'react'
+import {View,Text, Image, StyleSheet, Pressable,Button,Dimensions, TouchableOpacity} from 'react-native'
+import LinearGradient from 'react-native-linear-gradient';
+import queryString from 'query-string';
+import YoutubePlayer from "react-native-youtube-iframe";
+import movieTrailer from 'movie-trailer';
+import logo from '../assets/logo.png'
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+const MovieInfo = ({navigation,route}) => {
+
+    const id = route.params.id;
+
+    const [movie,setMovie]=useState([])
+    const [showPlayer, setShowPlayer] = useState(false);
+    const [playing, setPlaying] = useState(true);
+    const [playerUrl, setPlayerUrl] = useState('');
+    const [actualUrl,setActualUrl]=useState('')
+
+    useEffect(() => {
+        const getData = () => {
+          fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=243e4c829c03af820debe020b717349b`)
+            .then((response) => response.json())
+            .then((data) => setMovie(data))
+            .catch((error) => console.log('Error fetching data:', error));
+        };
+        getData();
+      }, [id]);
+      console.log(movie)
+
+      useEffect(()=>{
+        if (movie) {
+          const movieName = movie?.title || movie?.name  || movie?.original_name;
+          movieTrailer(movieName || '')
+            .then((url) => {
+              // const parsedUrl = new URL(url);
+              console.log('Trailer URL:', url);
+              setActualUrl(url)
+              const parsedUrl = queryString.parseUrl(url); // Parse query parameters
+              const query = parsedUrl.query;
+              setPlayerUrl(query.v);
+            })
+            .catch((error) => console.log(error));
+        }
+      },[movie])
+      
+
+      const handlePlayClick = () => {
+        setShowPlayer(false);
+        navigation.navigate('MoviePlayer',{movie: movie})
+      };
+      const onStateChange = useCallback((state) => {
+        if (state === "ended") {
+          setPlaying(false);
+          setShowPlayer(false)
+        }
+      }, []);
+      console.log("Player url",playerUrl)
+
+  return (
+    <View style={styles.bannerContainer}>
+        {showPlayer ? (
+        <View style={{ transform: [{ rotate: "90deg" }] }}>
+      <YoutubePlayer
+        apiKey="AIzaSyDDBmX-T7__7UnVz29ErvSajkYknlW_t5A"
+        height={SCREEN_WIDTH}
+        width={SCREEN_HEIGHT}
+        // margin={10}
+        play={playing}
+        videoId={playerUrl}
+        onChangeState={onStateChange}
+        webViewProps={{
+            injectedJavaScript: `
+              var element = document.getElementsByClassName('container')[0];
+              element.style.position = 'unset';
+              element.style.paddingBottom = 'unset';
+              true;
+            `,
+          }}
+       
+      />
+            {/* <Button title={playing ? "pause" : "play"} onPress={togglePlaying} /> */}
+
+    </View>
+      ):( 
+      <View style={styles.bannerContainer}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Home')} style={{zIndex:2,position:'absolute',margin:10}}>
+          <Image source={logo} style={{width:50,height:50,}}/>
+          </TouchableOpacity>
+          
+        <Image source={{ uri: `https://image.tmdb.org/t/p/original/${movie?.backdrop_path}` }} style={styles.bannerImage}/>
+        <LinearGradient
+    colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.9)']}
+    style={styles.gradientContainer}
+  />
+        {movie?.title || movie?.name || movie?.original_name ?(
+          <View>
+        <View style={styles.bannerContent}>
+            <Text style={styles.bannerTitle}>{movie?.title || movie?.name || movie?.original_name}</Text>
+            <View style={{flexDirection: 'row'}}>
+                <Text style={{color:'white'}}>{movie?.genres[0]?.name} </Text>
+                <Text style={{color:'white'}}>| {movie?.genres[1]?.name} </Text>
+                <Text style={{color:'white'}}>| {movie?.genres[2]?.name}</Text>
+            </View>
+            <TouchableOpacity onPress={handlePlayClick}  >
+            <View style={styles.bannerButtons}>
+              <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>Watch Now</Text>
+            </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.description}>
+          
+            {/* <Text style={styles.descriptionHeading}>Storyline:</Text> */}
+            <Text style={styles.descriptionOverview}>{movie?.overview}</Text>
+          </View>
+          {/* <Text>Length</Text>
+          <Text>{movie?.runtime} min</Text> */}
+          </View>
+          ) : null}
+          
+          <View>
+
+          </View>
+          </View>)}
+      
+    </View>
+  )
+}
+
+const styles=StyleSheet.create({
+    bannerContainer:{
+        flex:1,
+        backgroundColor:'rgb(0,0,0)'
+    },
+    bannerImage:{
+        ...StyleSheet.absoluteFillObject,
+        resizeMode: 'cover',
+        height:450
+    },
+    bannerContent:{
+        display:'flex',
+        // flexDirection:'column',
+        justifyContent:'flex-end',
+        alignItems:'center',
+        height:450,
+        
+        width:'100%'
+    },
+    bannerTitle:{
+        fontSize:35,
+        color: 'white',
+        fontWeight:'bold',
+        textAlign:'center',
+    },
+    description:{
+        display:'flex',
+        paddingTop:2,
+        margin:10,
+        // flexDirection:'column',
+        // height:100,
+        // marginLeft:10,
+        // marginRight:5,
+        // justifyContent:'space-around',
+        // marginTop:-200
+    },
+    descriptionHeading:{
+        fontSize:16,
+        fontWeight:'bold',
+        color:'rgba(255,255,255,1)', 
+        // textDecorationLine:'underline'
+    },
+    descriptionOverview:{
+        paddingTop:10,
+        paddingLeft:10,
+        paddingRight:10,
+        // width:390,
+        // justifyContent:'center'
+        textAlign:'justify',
+        color:'rgba(255,255,255,1)'
+    },
+    gradientContainer: {
+        ...StyleSheet.absoluteFillObject,
+        height: 450,
+      },
+      bannerButtons: {
+        marginTop: 10,
+            backgroundColor: '#E50914',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingVertical: 10,
+            // paddingHorizontal: 12,
+            width:390,
+            borderRadius: 5,
+            elevation: 3,
+        
+      },
+})
+
+export default MovieInfo
+
+'rgba(150,150,150,0.35)'
