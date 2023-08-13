@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import logo from '../assets/fullLogo.png';
+import NetflixBackground from '../assets/NetflixBackground.jpg'
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -20,21 +21,25 @@ const SignInScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Image source={logo} style={styles.logo} resizeMode="contain" />
       
-    <Image source={{uri:'http://s3-us-west-2.amazonaws.com/techvibes/wp-content/uploads/2017/04/24135159/Netflix-Background.jpg'}} style={styles.backgroungImage}/>
+    <Image source={NetflixBackground} style={styles.backgroungImage}/>
       <View style={styles.form}>
       {/* <Image source={logo} style={styles.logo} resizeMode="contain" /> */}
       <Text style={{marginBottom: 20,fontSize:28,color:'white',fontWeight:'bold',textAlign:'left'}}>Sign In</Text>
         <TextInput
           style={styles.input}
           placeholder="Email"
+          placeholderTextColor="gray" 
           onChangeText={text => setEmail(text)}
           value={email}
+          color='rgba(0,0,0,1)'
         />
         <TextInput
           style={styles.input}
           placeholder="Password"
+          placeholderTextColor="gray" 
           onChangeText={text => setPassword(text)}
           value={password}
+          color='rgba(0,0,0,1)'
           secureTextEntry
         />
 
