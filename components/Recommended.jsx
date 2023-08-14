@@ -1,7 +1,9 @@
 import React,{useState,useEffect} from 'react'
-import {View,Text,StyleSheet,Image, FlatList,TouchableOpacity, ActivityIndicator} from 'react-native'
+import {View,Text,StyleSheet,Image, FlatList,TouchableOpacity, Dimensions} from 'react-native'
 import requests from '../utils/endpoints';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+const windowWidth = Dimensions.get('window').width;
 
 const Recommended = ({navigation}) => {
 
@@ -47,53 +49,63 @@ console.log("MovieDetails",movieDetails)
     //     return <ActivityIndicator />;
     // }
   return (
-    <View style={{flex:1}}>
+    <View style={styles.container}>
         {/* <Text style={{color:'rgba(255,255,255,0.9)',fontSize:15,fontWeight:'bold',marginTop:10,marginLeft:10,marginBottom:5}}>YOUR WATCHLIST</Text> */}
         <FlatList
         data={movieDetails}
         renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}/>
       </View>
   )
 }
 
 const styles=StyleSheet.create({
-    recommendedCards:{
-        display:'flex',
-        flexDirection:'row',
-        margin:5,
-        width:375,
-        backgroundColor:'rgba(151,151,151,0.3)',
-        padding:1,
-        borderRadius:10,
-        borderWidth:1,
-        borderColor:'gray',
-        elevation:50
-      },
-      card: {
-        height: 120,
-        width: 90,
-        margin: 3,
-        borderRadius: 6
-      },
-      recommendedTitle:{
-        fontSize:19, 
-        color:'rgba(255,255,255,0.9)',
-        fontWeight:'bold',
-        paddingRight: 10,
-        width:285
-      },
-      ratingContainer:{
-        top:10
-      },
-      rating:{
-        display:'flex',
-        flexDirection:'row'
-      },
-      content:{
-        marginLeft:5,
-        padding:2.5
-      }
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    width: windowWidth,
+    marginHorizontal: 10, // Add horizontal margin
+  },
+  recommendedCards: {
+    width: windowWidth-20, // Adjust card width to fit within screen width with some margin
+    backgroundColor: 'rgba(151, 151, 151, 0.3)',
+    padding: 2,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    elevation: 5,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  card: {
+    height: 120,
+    width: '25%', // Adjust card width to a percentage of available width
+    margin: 2,
+    borderRadius: 6,
+  },
+  recommendedTitle: {
+    fontSize: 19,
+    color: 'rgba(255, 255, 255, 0.9)',
+    fontWeight: 'bold',
+    // paddingRight: 10,
+    width: windowWidth-120, // Adjust title width to take available space within card
+  },
+  ratingContainer: {
+    top: '10%',
+  },
+  rating: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  content: {
+    marginLeft: 3,
+    padding: 2.5,
+    marginRight:10
+  },
 })
 
 export default Recommended

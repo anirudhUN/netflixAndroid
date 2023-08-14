@@ -126,20 +126,25 @@ const handledislike=()=>{
         <Text style={styles.iconText}>Dislike</Text>
         </View>
         <View style={{display:'flex',flexDirection:'column',alignItems:'center',marginLeft:35}}>
-        <Icon name="download" size={25} color="white" />
+        <Icon name="download" size={25} color="rgba(255,255,255,0.6)" />
         <Text style={styles.iconText}>Download</Text>
         </View>
         <View style={{display:'flex',flexDirection:'column',alignItems:'center',marginLeft:35}}>
-        <Icon name="sharealt" size={25} color="white" />
+        <Icon name="sharealt" size={25} color="rgba(255,255,255,0.6)"  />
         <Text style={styles.iconText}>Share</Text>
         </View>
         <View style={{display:'flex',flexDirection:'column',alignItems:'center',marginLeft:35}}>
+            <TouchableOpacity onPress={()=>navigation.navigate('MyList')}>
         <Icon name="menuunfold" size={25} color="white" />
+        </TouchableOpacity>
         <Text style={styles.iconText}>My List</Text>
         </View>
       </View>
-      <Text style={{color:'rgba(255,255,255,0.9)',fontSize:15,fontWeight:'bold',position:'relative',marginTop:15,marginRight:240,marginBottom:10}}>YOUR WATCHLIST</Text>
-      <Recommended navigation={navigation}/>
+      <Text style={styles.watchlistTitle}>YOUR WATCHLIST</Text>
+      <View style={styles.watchlistContainer}>
+        <Recommended navigation={navigation} />
+      </View>
+
       </View>
            
     </View>
@@ -164,18 +169,24 @@ const styles=StyleSheet.create({
     },
     iconsContainer: {
         flexDirection: 'row',
-        // justifyContent: 'space-between',
-        backgroundColor:'rgb(199,9,11)',
-        // marginTop: 1,
-        borderRadius:10,
-        width:375,
-        padding:10,
-        // marginLeft:3,
-        paddingTop:15,
-        paddingBottom:15,
-        paddingLeft:10,
-        borderWidth:0.5,
-        borderColor:'#fff'
+        justifyContent: 'space-between',
+        backgroundColor: 'rgb(199, 9, 11)',
+        borderRadius: 10,
+        padding: 10,
+        borderWidth: 0.5,
+        borderColor: '#fff',
+        marginTop: 2,
+      },
+      watchlistTitle: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: 'rgba(255, 255, 255, 0.9)',
+        marginTop: 15,
+        marginBottom: 10,
+        marginLeft: 10,
+      },
+      watchlistContainer: {
+        flex: 1,
       },
       iconText:{
         fontSize:12,

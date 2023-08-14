@@ -12,7 +12,7 @@ const MyList = ({navigation}) => {
           </TouchableOpacity>
         <Text  style={styles.navItems}>My List</Text>
       </View>
-      <View style={{flex:1}}>
+      <View style={{flex:1,alignItems:'center'}}>
       <Recommended navigation={navigation}/>
       </View>
     </View>

@@ -75,6 +75,7 @@ const Banner=({ fetchUrl ,navigation})=> {
         renderItem={renderMovieCard}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id}
+        // pagingEnabled={true}
       />
     </View>
   );
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     card: {
       height: 250,
       width: 400,
-      margin: 3,
+      margin: 2,
       borderRadius: 10,
     },
     card_heading: {

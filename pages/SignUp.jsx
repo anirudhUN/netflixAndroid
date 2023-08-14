@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import logo from '../assets/fullLogo.png';
 import NetflixBackground from '../assets/NetflixBackground.jpg'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -9,8 +10,8 @@ const SignInScreen = ({ navigation }) => {
 
   const handleSignIn = () => {
     if (email === 'user@mail.com' && password === 'Password') {
-      navigation.replace('Home'); 
-    } else {
+              navigation.replace('Home');
+          } else {
       alert('Authentication failed. Invalid email or password.');
     }
   };
